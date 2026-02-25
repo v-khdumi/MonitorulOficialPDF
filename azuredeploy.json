@@ -18,7 +18,7 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "B1",
+      "defaultValue": "F1",
       "allowedValues": [
         "F1",
         "B1",
