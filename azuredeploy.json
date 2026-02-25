@@ -18,13 +18,13 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "B1",
+      "defaultValue": "F1",
       "allowedValues": [
         "F1",
         "B1"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier. B1 (Basic) is the default — dedicated VMs available on most subscriptions without quota increases. F1 (Free) is available for lighter workloads but may require Free-tier VM quota."
+        "description": "App Service plan pricing tier. F1 (Free) is the default — no dedicated VM quota required. B1 (Basic) requires Basic VM quota; use only if your subscription has Basic VM quota available."
       }
     },
     "documentIntelligenceSku": {
