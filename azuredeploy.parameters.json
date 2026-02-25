@@ -17,14 +17,14 @@
     "documentIntelligenceKey": {
       "value": ""
     },
-    "openAiEndpoint": {
-      "value": ""
-    },
-    "openAiKey": {
-      "value": ""
-    },
     "openAiDeploymentName": {
       "value": "gpt-4o"
+    },
+    "openAiModelName": {
+      "value": "gpt-4o"
+    },
+    "openAiModelVersion": {
+      "value": "2024-08-06"
     }
   }
 }
