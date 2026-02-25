@@ -1,50 +1,150 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MonitorulOficialPDF.Web</title>
+    <title>@ViewData["Title"] - Monitorul Oficial PDF</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MonitorulOficialPDF.Web.styles.css" asp-append-version="true" />
+    <style>
+        :root {
+            --ro-blue: #002B7F;
+            --ro-yellow: #FCD116;
+            --ro-red: #CE1126;
+        }
+        .navbar-custom {
+            background: linear-gradient(135deg, var(--ro-blue) 0%, #003a9e 100%);
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff !important;
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--ro-yellow) !important;
+        }
+        .navbar-brand-icon {
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            margin-right: 4px;
+            vertical-align: middle;
+            border-radius: 2px;
+        }
+        .brand-blue { background: var(--ro-blue); }
+        .brand-yellow { background: var(--ro-yellow); }
+        .brand-red { background: var(--ro-red); }
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--ro-blue) 33%, var(--ro-yellow) 33% 66%, var(--ro-red) 66%);
+        }
+        .btn-ro-blue {
+            background-color: var(--ro-blue);
+            border-color: var(--ro-blue);
+            color: #fff;
+        }
+        .btn-ro-blue:hover {
+            background-color: #001f5c;
+            border-color: #001f5c;
+            color: #fff;
+        }
+        .btn-ro-yellow {
+            background-color: var(--ro-yellow);
+            border-color: var(--ro-yellow);
+            color: #1a1a1a;
+        }
+        .btn-ro-yellow:hover {
+            background-color: #e0b800;
+            border-color: #e0b800;
+            color: #1a1a1a;
+        }
+        .btn-ro-red {
+            background-color: var(--ro-red);
+            border-color: var(--ro-red);
+            color: #fff;
+        }
+        .btn-ro-red:hover {
+            background-color: #a80d1e;
+            border-color: #a80d1e;
+            color: #fff;
+        }
+        .spinner-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .spinner-overlay.active {
+            display: flex;
+        }
+        .footer {
+            position: relative;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-custom shadow-sm">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MonitorulOficialPDF.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index">
+                    <span class="navbar-brand-icon brand-blue"></span><span class="navbar-brand-icon brand-yellow"></span><span class="navbar-brand-icon brand-red"></span>
+                    Monitorul Oficial PDF
+                </a>
+                <button class="navbar-toggler border-light" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Comutare navigare">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door me-1" viewBox="0 0 16 16"><path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/></svg>
+                                Acasă
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">Confidențialitate</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <div class="accent-bar"></div>
     </header>
-    <div class="container">
+
+    <div id="loadingSpinner" class="spinner-overlay">
+        <div class="text-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Se încarcă...</span>
+            </div>
+            <p class="mt-2 text-muted">Se încarcă...</p>
+        </div>
+    </div>
+
+    <div class="container mt-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - MonitorulOficialPDF.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="border-top footer text-muted mt-5 py-3">
+        <div class="accent-bar mb-3"></div>
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - Monitorul Oficial PDF - <a asp-area="" asp-page="/Privacy">Confidențialitate</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function showSpinner() {
+            document.getElementById('loadingSpinner').classList.add('active');
+        }
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

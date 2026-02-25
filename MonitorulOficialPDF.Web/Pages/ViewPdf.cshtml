@@ -1,0 +1,36 @@
+@page
+@model MonitorulOficialPDF.Web.Pages.ViewPdfModel
+@{
+    ViewData["Title"] = "Vizualizare PDF";
+}
+
+<div class="mb-3">
+    <a asp-page="/Index" class="btn btn-outline-secondary btn-sm">
+        &larr; Înapoi la listă
+    </a>
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header text-white d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2" style="background-color: var(--ro-blue);">
+        <span class="fw-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-pdf me-1" viewBox="0 0 16 16"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/></svg>
+            Vizualizare Document PDF
+        </span>
+        <span class="d-flex gap-2">
+            <a asp-page="/OcrView" asp-route-url="@Model.Url" class="btn btn-sm btn-ro-yellow" onclick="showSpinner()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-body-text me-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5m0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5"/></svg>
+                Extrage text OCR
+            </a>
+        </span>
+    </div>
+    <div class="card-body p-0">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger m-3" role="alert">@Model.ErrorMessage</div>
+        }
+        else
+        {
+            <embed src="/Api/Pdf?url=@Uri.EscapeDataString(Model.Url ?? "")" type="application/pdf" width="100%" style="height: 80vh; border: none;" />
+        }
+    </div>
+</div>
