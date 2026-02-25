@@ -24,12 +24,10 @@
         "B1",
         "B2",
         "S1",
-        "S2",
-        "P1v3",
-        "P2v3"
+        "S2"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier (F1 = free shared, B1+ = dedicated)"
+        "description": "App Service plan pricing tier (F1 = free shared, B1/B2 = basic, S1/S2 = standard)"
       }
     },
     "documentIntelligenceSku": {
