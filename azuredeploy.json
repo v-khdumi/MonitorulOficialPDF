@@ -18,13 +18,14 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "B1",
+      "defaultValue": "P0v3",
       "allowedValues": [
         "F1",
-        "B1"
+        "B1",
+        "P0v3"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier. B1 (basic, dedicated VM) is the default because F1 (free) requires Free VM quota which many subscriptions lack. D1 (shared) is excluded for similar quota reasons."
+        "description": "App Service plan pricing tier. P0v3 (Premium V3) is the default — dedicated, fast, and avoids Free/Shared VM quota limits. F1 and B1 are still available for lighter workloads."
       }
     },
     "documentIntelligenceSku": {
