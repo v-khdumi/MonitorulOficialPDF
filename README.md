@@ -39,7 +39,7 @@ azuredeploy.parameters.json       ← Parametri ARM template
 
 | Serviciu | Descriere | Obligatoriu |
 |----------|-----------|-------------|
-| **Azure App Service** | Găzduire aplicație web | Da |
+| **Azure App Service** | Găzduire aplicație web (Windows, F1 free tier) | Da |
 | **Azure Document Intelligence** | OCR pentru extragere text din PDF-uri | Da (provizionat automat de template) |
 | **Azure OpenAI** | Analiză și rezumat inteligent al textului | Da (provizionat automat de template) |
 
@@ -56,7 +56,7 @@ Apasă butonul de mai sus sau acest link:
 Completează parametrii:
 1. **Web App Name** — Numele aplicației (unic în Azure)
 2. **Location** — Regiunea Azure (recomandat: `West Europe`)
-3. **SKU** — Pricing tier (recomandat: `B1` sau `S1`; nu se acceptă F1 din cauza limitelor de cotă)
+3. **SKU** — Pricing tier (default: `F1` gratuit; opțiuni dedicate: `B1`, `S1`, etc.)
 4. **Document Intelligence SKU** — Tier pentru OCR (default: `F0` gratuit, sau `S0` standard)
 5. **OpenAI Deployment Name** — Numele deployment-ului Azure OpenAI (default: `gpt-4o`)
 6. **OpenAI Model Name/Version** — Modelul și versiunea Azure OpenAI (default: `gpt-4o` / `2024-08-06`)
@@ -139,4 +139,4 @@ Aplicația va fi disponibilă la `http://localhost:5000`.
 - **HtmlAgilityPack** — Parsing HTML pentru scraping
 - **Azure Document Intelligence** — OCR (Form Recognizer)
 - **Azure OpenAI** — Analiză text cu GPT
-- **Azure App Service** — Hosting
+- **Azure App Service (Windows)** — Hosting
