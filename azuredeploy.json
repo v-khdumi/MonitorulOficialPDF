@@ -21,11 +21,10 @@
       "defaultValue": "F1",
       "allowedValues": [
         "F1",
-        "S1",
-        "S2"
+        "D1"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier (F1 = free shared, S1/S2 = standard). Basic tier (B1/B2) is excluded because most subscriptions lack Basic VM quota."
+        "description": "App Service plan pricing tier. Only shared tiers are offered: F1 (free) and D1 (shared, paid). Standard (S1/S2) and Basic (B1/B2) tiers require dedicated VM quota that most subscriptions do not have."
       }
     },
     "documentIntelligenceSku": {
