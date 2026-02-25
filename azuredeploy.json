@@ -76,7 +76,7 @@
     },
     "branch": {
       "type": "string",
-      "defaultValue": "main",
+      "defaultValue": "master",
       "metadata": {
         "description": "GitHub branch to deploy"
       }

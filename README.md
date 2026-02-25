@@ -2,7 +2,7 @@
 
 Aplicație web pentru extragerea și vizualizarea publicațiilor din [Monitorul Oficial al României](https://monitoruloficial.ro/) din ultimele 7 zile, cu suport pentru OCR și analiză AI.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fv-khdumi%2FMonitorulOficialPDF%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fv-khdumi%2FMonitorulOficialPDF%2Fmaster%2Fazuredeploy.json)
 
 ## Funcționalități
 
@@ -51,7 +51,7 @@ azuredeploy.parameters.json       ← Parametri ARM template
 
 Apasă butonul de mai sus sau acest link:
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fv-khdumi%2FMonitorulOficialPDF%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fv-khdumi%2FMonitorulOficialPDF%2Fmaster%2Fazuredeploy.json)
 
 Completează parametrii:
 1. **Web App Name** — Numele aplicației (unic în Azure)
