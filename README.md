@@ -40,10 +40,10 @@ azuredeploy.parameters.json       ← Parametri ARM template
 | Serviciu | Descriere | Obligatoriu |
 |----------|-----------|-------------|
 | **Azure App Service** | Găzduire aplicație web | Da |
-| **Azure Document Intelligence** | OCR pentru extragere text din PDF-uri | Opțional* |
+| **Azure Document Intelligence** | OCR pentru extragere text din PDF-uri | Da (provizionat automat de template) |
 | **Azure OpenAI** | Analiză și rezumat inteligent al textului | Da (provizionat automat de template) |
 
-> \* Aplicația funcționează și fără serviciul Document Intelligence — scraping-ul și vizualizarea PDF-urilor funcționează independent. Azure OpenAI este provizionat automat prin template-ul ARM.
+> Ambele servicii Azure (Document Intelligence și OpenAI) sunt provizionate automat prin template-ul ARM. Scraping-ul și vizualizarea PDF-urilor funcționează independent de aceste servicii.
 
 ## Deployment în Azure
 
@@ -56,12 +56,12 @@ Apasă butonul de mai sus sau acest link:
 Completează parametrii:
 1. **Web App Name** — Numele aplicației (unic în Azure)
 2. **Location** — Regiunea Azure (recomandat: `West Europe`)
-3. **SKU** — Pricing tier (recomandat: `B1` sau `S1`)
-4. **Document Intelligence Endpoint/Key** — Opțional, pentru funcționalitatea OCR
+3. **SKU** — Pricing tier (recomandat: `B1` sau `S1`; nu se acceptă F1 din cauza limitelor de cotă)
+4. **Document Intelligence SKU** — Tier pentru OCR (default: `F0` gratuit, sau `S0` standard)
 5. **OpenAI Deployment Name** — Numele deployment-ului Azure OpenAI (default: `gpt-4o`)
 6. **OpenAI Model Name/Version** — Modelul și versiunea Azure OpenAI (default: `gpt-4o` / `2024-08-06`)
 
-> **Notă:** Template-ul provizionează automat un cont Azure OpenAI și un deployment de model. Nu este necesar să creați manual resursa Azure OpenAI.
+> **Notă:** Template-ul provizionează automat un cont Azure OpenAI, un deployment de model și un cont Azure Document Intelligence. Nu este necesar să creați manual aceste resurse.
 
 ### Opțiunea 2: Deployment manual
 

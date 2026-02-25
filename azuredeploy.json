@@ -18,9 +18,8 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "F1",
+      "defaultValue": "B1",
       "allowedValues": [
-        "F1",
         "B1",
         "B2",
         "S1",
@@ -29,21 +28,18 @@
         "P2v3"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier"
+        "description": "App Service plan pricing tier (B1 or higher recommended)"
       }
     },
-    "documentIntelligenceEndpoint": {
+    "documentIntelligenceSku": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "F0",
+      "allowedValues": [
+        "F0",
+        "S0"
+      ],
       "metadata": {
-        "description": "Azure Document Intelligence (Form Recognizer) endpoint URL"
-      }
-    },
-    "documentIntelligenceKey": {
-      "type": "securestring",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Azure Document Intelligence (Form Recognizer) API key"
+        "description": "Azure Document Intelligence pricing tier (F0 = free, S0 = standard)"
       }
     },
     "openAiDeploymentName": {
@@ -98,7 +94,8 @@
   },
   "variables": {
     "appServicePlanName": "[concat('plan-', parameters('webAppName'))]",
-    "openAiAccountName": "[concat('oai-', parameters('webAppName'))]"
+    "openAiAccountName": "[concat('oai-', parameters('webAppName'))]",
+    "docIntelligenceName": "[concat('di-', parameters('webAppName'))]"
   },
   "resources": [
     {
@@ -135,6 +132,20 @@
       }
     },
     {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2024-10-01",
+      "name": "[variables('docIntelligenceName')]",
+      "location": "[parameters('location')]",
+      "kind": "FormRecognizer",
+      "sku": {
+        "name": "[parameters('documentIntelligenceSku')]"
+      },
+      "properties": {
+        "customSubDomainName": "[variables('docIntelligenceName')]",
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2022-09-01",
       "name": "[variables('appServicePlanName')]",
@@ -154,7 +165,8 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-        "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), parameters('openAiDeploymentName'))]"
+        "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), parameters('openAiDeploymentName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('docIntelligenceName'))]"
       ],
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
@@ -163,11 +175,11 @@
           "appSettings": [
             {
               "name": "AzureDocumentIntelligence__Endpoint",
-              "value": "[parameters('documentIntelligenceEndpoint')]"
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('docIntelligenceName'))).endpoint]"
             },
             {
               "name": "AzureDocumentIntelligence__Key",
-              "value": "[parameters('documentIntelligenceKey')]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('docIntelligenceName')), '2024-10-01').key1]"
             },
             {
               "name": "AzureOpenAI__Endpoint",
@@ -217,6 +229,10 @@
     "openAiEndpoint": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))).endpoint]"
+    },
+    "documentIntelligenceEndpoint": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('docIntelligenceName'))).endpoint]"
     }
   }
 }

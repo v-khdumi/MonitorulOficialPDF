@@ -9,13 +9,10 @@
       "value": "westeurope"
     },
     "sku": {
-      "value": "F1"
+      "value": "B1"
     },
-    "documentIntelligenceEndpoint": {
-      "value": ""
-    },
-    "documentIntelligenceKey": {
-      "value": ""
+    "documentIntelligenceSku": {
+      "value": "F0"
     },
     "openAiDeploymentName": {
       "value": "gpt-4o"
