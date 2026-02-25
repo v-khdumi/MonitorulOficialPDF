@@ -46,25 +46,39 @@
         "description": "Azure Document Intelligence (Form Recognizer) API key"
       }
     },
-    "openAiEndpoint": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Azure OpenAI endpoint URL"
-      }
-    },
-    "openAiKey": {
-      "type": "securestring",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Azure OpenAI API key"
-      }
-    },
     "openAiDeploymentName": {
       "type": "string",
       "defaultValue": "gpt-4o",
       "metadata": {
         "description": "Azure OpenAI model deployment name"
+      }
+    },
+    "openAiModelName": {
+      "type": "string",
+      "defaultValue": "gpt-4o",
+      "metadata": {
+        "description": "Azure OpenAI model name to deploy"
+      }
+    },
+    "openAiModelVersion": {
+      "type": "string",
+      "defaultValue": "2024-08-06",
+      "metadata": {
+        "description": "Azure OpenAI model version"
+      }
+    },
+    "openAiSkuName": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "Azure OpenAI deployment SKU name"
+      }
+    },
+    "openAiSkuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Azure OpenAI deployment SKU capacity (in thousands of tokens per minute)"
       }
     },
     "repoUrl": {
@@ -83,9 +97,43 @@
     }
   },
   "variables": {
-    "appServicePlanName": "[concat('plan-', parameters('webAppName'))]"
+    "appServicePlanName": "[concat('plan-', parameters('webAppName'))]",
+    "openAiAccountName": "[concat('oai-', parameters('webAppName'))]"
   },
   "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2024-10-01",
+      "name": "[variables('openAiAccountName')]",
+      "location": "[parameters('location')]",
+      "kind": "OpenAI",
+      "sku": {
+        "name": "S0"
+      },
+      "properties": {
+        "customSubDomainName": "[variables('openAiAccountName')]",
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/deployments",
+      "apiVersion": "2024-10-01",
+      "name": "[concat(variables('openAiAccountName'), '/', parameters('openAiDeploymentName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))]"
+      ],
+      "sku": {
+        "name": "[parameters('openAiSkuName')]",
+        "capacity": "[parameters('openAiSkuCapacity')]"
+      },
+      "properties": {
+        "model": {
+          "format": "OpenAI",
+          "name": "[parameters('openAiModelName')]",
+          "version": "[parameters('openAiModelVersion')]"
+        }
+      }
+    },
     {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2022-09-01",
@@ -105,7 +153,8 @@
       "name": "[parameters('webAppName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), parameters('openAiDeploymentName'))]"
       ],
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
@@ -122,11 +171,11 @@
             },
             {
               "name": "AzureOpenAI__Endpoint",
-              "value": "[parameters('openAiEndpoint')]"
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))).endpoint]"
             },
             {
               "name": "AzureOpenAI__Key",
-              "value": "[parameters('openAiKey')]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName')), '2024-10-01').key1]"
             },
             {
               "name": "AzureOpenAI__DeploymentName",
@@ -164,6 +213,10 @@
     "webAppName": {
       "type": "string",
       "value": "[parameters('webAppName')]"
+    },
+    "openAiEndpoint": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))).endpoint]"
     }
   }
 }
