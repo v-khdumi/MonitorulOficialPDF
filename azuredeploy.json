@@ -18,14 +18,13 @@
     },
     "sku": {
       "type": "string",
-      "defaultValue": "B1",
+      "defaultValue": "F1",
       "allowedValues": [
         "F1",
-        "D1",
         "B1"
       ],
       "metadata": {
-        "description": "App Service plan pricing tier. F1 (free) and D1 (shared) use Shared VM quota — some subscriptions have 0 Shared VM quota and cannot use these tiers. B1 (basic, paid) uses dedicated VMs and works on most subscriptions."
+        "description": "App Service plan pricing tier. F1 (free, shared infrastructure) or B1 (basic, paid, dedicated VM). D1 (shared) is excluded because most subscriptions have zero Shared VM quota."
       }
     },
     "documentIntelligenceSku": {

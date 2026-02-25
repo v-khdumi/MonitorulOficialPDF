@@ -56,7 +56,7 @@ Apasă butonul de mai sus sau acest link:
 Completează parametrii:
 1. **Web App Name** — Numele aplicației (unic în Azure)
 2. **Location** — Regiunea Azure (recomandat: `West Europe`)
-3. **SKU** — Pricing tier (default: `B1` basic plătit; opțiuni: `F1` gratuit, `D1` shared plătit). F1 și D1 folosesc cota de Shared VM — unele subscripții au cota 0 pentru Shared VMs și nu pot folosi aceste tier-uri. B1 folosește VM-uri dedicate și funcționează pe majoritatea subscripțiilor.
+3. **SKU** — Pricing tier (default: `F1` gratuit; opțiune: `B1` basic plătit cu VM dedicat). D1 (shared) nu este inclus deoarece majoritatea subscripțiilor au cotă zero pentru Shared VMs.
 4. **Document Intelligence SKU** — Tier pentru OCR (default: `F0` gratuit, sau `S0` standard)
 5. **OpenAI Deployment Name** — Numele deployment-ului Azure OpenAI (default: `gpt-4o`)
 6. **OpenAI Model Name/Version** — Modelul și versiunea Azure OpenAI (default: `gpt-4o` / `2024-08-06`)
