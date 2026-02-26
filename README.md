@@ -39,7 +39,7 @@ azuredeploy.parameters.json       ← Parametri ARM template
 
 | Serviciu | Descriere | Obligatoriu |
 |----------|-----------|-------------|
-| **Azure App Service** | Găzduire aplicație web (Windows, B1 basic tier) | Da |
+| **Azure App Service** | Găzduire aplicație web (Windows, F1 free tier implicit) | Da |
 | **Azure Document Intelligence** | OCR pentru extragere text din PDF-uri | Da (provizionat automat de template) |
 | **Azure OpenAI** | Analiză și rezumat inteligent al textului | Da (provizionat automat de template) |
 
@@ -129,7 +129,7 @@ cd MonitorulOficialPDF.Web
 dotnet run
 ```
 
-Aplicația va fi disponibilă la `http://localhost:5000`.
+Aplicația va fi disponibilă la `http://localhost:5283`.
 
 ## Tehnologii utilizate
 

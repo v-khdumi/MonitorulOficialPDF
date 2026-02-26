@@ -18,6 +18,16 @@ namespace MonitorulOficialPDF.Web.Services
 
         public async Task<byte[]> DownloadPdfAsync(string relativeUrl)
         {
+            if (string.IsNullOrEmpty(relativeUrl) ||
+                !relativeUrl.StartsWith("/") ||
+                relativeUrl.StartsWith("//") ||
+                relativeUrl.Contains("@") ||
+                relativeUrl.Contains("\\"))
+            {
+                _logger.LogWarning("Invalid relative URL rejected: {Url}", relativeUrl);
+                return Array.Empty<byte>();
+            }
+
             if (_cache.TryGetValue(relativeUrl, out byte[]? cachedPdf) && cachedPdf != null)
             {
                 _logger.LogInformation("Returning cached PDF for {Url}", relativeUrl);
