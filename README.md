@@ -55,13 +55,15 @@ Apasă butonul de mai sus sau acest link:
 
 Completează parametrii:
 1. **Web App Name** — Numele aplicației (unic în Azure)
-2. **Location** — Regiunea Azure (recomandat: `West Europe`)
+2. **Location** — Regiunea Azure (trebuie să suporte Azure OpenAI și Document Intelligence, de ex. `West Europe`, `East US`, `Sweden Central`)
 3. **SKU** — Pricing tier (default: `F1` gratuit; opțiune: `B1` basic plătit cu VM dedicat). D1 (shared) nu este inclus deoarece majoritatea subscripțiilor au cotă zero pentru Shared VMs.
 4. **Document Intelligence SKU** — Tier pentru OCR (default: `F0` gratuit, sau `S0` standard)
 5. **OpenAI Deployment Name** — Numele deployment-ului Azure OpenAI (default: `gpt-4o`)
 6. **OpenAI Model Name/Version** — Modelul și versiunea Azure OpenAI (default: `gpt-4o` / `2024-08-06`)
 
 > **Notă:** Template-ul provizionează automat un cont Azure OpenAI, un deployment de model și un cont Azure Document Intelligence. Nu este necesar să creați manual aceste resurse.
+>
+> **Important:** Regiunea selectată trebuie să suporte atât Azure OpenAI cât și Azure Document Intelligence. Regiuni recomandate: `West Europe`, `East US`, `East US 2`, `Sweden Central`.
 
 ### Opțiunea 2: Deployment manual
 
